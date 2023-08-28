@@ -1,9 +1,22 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import PrimeVideoLogo from "../../assets/prime_video.png";
 import AmazonLogo from "../../assets/amazon_logo.png";
 
 import MovieTheWell from "../../assets/movies/the_wheel_of_time.png";
+import { MOVIESWATCHING } from "../../utils/moviesWatching";
+import { MOVIESCRIME } from "../../utils/moviesCrimes";
+import { MOVIESWATCH } from "../../utils/moviesWatch";
+
+import MovieCard from "../../components/MovieCard";
 
 export const Home = () => {
   return (
@@ -38,6 +51,44 @@ export const Home = () => {
       <TouchableOpacity style={styles.movieImageThumbnail}>
         <Image source={MovieTheWell} style={styles.movieImageThumbnail} />
       </TouchableOpacity>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.contentMovies}
+      >
+        <Text style={styles.movieText}>Continue Watching</Text>
+
+        <FlatList
+          data={MOVIESWATCHING}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <MovieCard movieURL={item.moviesURL} />}
+          horizontal
+          contentContainerStyle={styles.contentList}
+          showsHorizontalScrollIndicator={false}
+        />
+
+        <Text style={styles.movieText}>Crime Movies</Text>
+
+        <FlatList
+          data={MOVIESCRIME}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <MovieCard movieURL={item.moviesURL} />}
+          horizontal
+          contentContainerStyle={styles.contentList}
+          showsHorizontalScrollIndicator={false}
+        />
+
+        <Text style={styles.movieText}>Watch in your language</Text>
+
+        <FlatList
+          data={MOVIESWATCH}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <MovieCard movieURL={item.moviesURL} />}
+          horizontal
+          contentContainerStyle={styles.contentList}
+          showsHorizontalScrollIndicator={false}
+        />
+      </ScrollView>
     </View>
   );
 };
@@ -75,8 +126,22 @@ const styles = StyleSheet.create({
     color: "#FFF",
   },
 
+  movieText: {
+    color: "#ffff",
+    fontSize: 18,
+    fontWeight: "700",
+    padding: 15,
+  },
+
   movieImageThumbnail: {
     width: "100%",
     alignItems: "center",
-  }
+  },
+
+  contentList: {
+    paddingLeft: 18,
+    paddingRight: 30,
+  },
+
+  contentMovies: {},
 });
